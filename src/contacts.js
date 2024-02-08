@@ -3,11 +3,13 @@ const fs = require("node:fs/promises");
 const path = require("path");
 const contactsPath = path.join(__dirname, "./db/contacts.json");
 
+console.log(__dirname);
+
 async function listContacts() {
   try {
     const data = await fs.readFile(contactsPath, { encoding: "utf-8" });
-
-    return JSON.parse(data);
+    const contacts = JSON.parse(data);
+    return contacts;
   } catch (error) {
     console.log(error.message);
     throw error;
@@ -16,9 +18,9 @@ async function listContacts() {
 
 async function getContactById(contactId) {
   try {
-    const data = await fs.readFile(contactsPath, { encoding: "utf-8" });
-    const contacts = JSON.parse(data);
-    return contacts.find((contact) => contact.id === contactId) || null;
+    const contacts = await listContacts();
+    const contactsById = contacts.find((contact) => contact.id === contactId);
+    return contactsById || null;
   } catch (error) {
     console.log(error.message);
     throw error;
@@ -41,8 +43,7 @@ async function removeContact(contactId) {
 
 async function addContact(name, email, phone) {
   try {
-    const data = await fs.writeFile(contactsPath, { encoding: "utf-8" });
-    const contacts = JSON.parse(data);
+    const contacts = await listContacts();
 
     const newContact = {
       id: crypto.randomUUID(),

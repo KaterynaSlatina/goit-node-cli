@@ -29,7 +29,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "add":
-      console.log(await addContact(name, email, phone));
+      console.log(await addContact({ name, email, phone }));
       break;
 
     case "remove":
