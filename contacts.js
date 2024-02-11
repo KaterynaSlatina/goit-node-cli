@@ -1,7 +1,7 @@
 const fs = require("node:fs/promises");
 
 const path = require("path");
-const contactsPath = path.join(__dirname, "./db/contacts.json");
+const contactsPath = path.join(__dirname, "db/contacts.json");
 
 console.log(__dirname);
 
